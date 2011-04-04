@@ -1,0 +1,26 @@
+
+Guideline
+------------------------------------------------------------
+
+Quelques scrips bashs facilement modifiables permettant de
+créer des fichiers sources à partir d'un squelette
+définissant un guide de style particulier.
+
+Options des scripts :
+	- [-v]		: permet d'ouvrir l'éditeur vim après la 
+				  création du fichier
+	- filename	: nom (sans l'extension) de la classe
+				  ou de la tâche.
+
+Guides de styles disponibles :
+	- INSA (classe)
+	- INSA (tâche)
+	
+Exemples :
+> insa-h 	[-v] filename
+> insa-cpp 	[-v] filename
+
+> insa-tache-h		[-v] filename
+> insa-tache-cpp	[-v] filename
+
+

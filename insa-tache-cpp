@@ -1,0 +1,46 @@
+#!/bin/sh
+
+# Option du script :
+while getopts v name
+  do
+    case $name in
+        v)
+            vflag=1
+            ;;
+        ?)
+            echo "Usage: $0 [-v] nom_classe\n"
+            exit 2
+            ;;
+    esac
+done
+
+# On enlève les options :
+shift $(($OPTIND -1))
+
+dir_script=$(dirname $0)
+squelette="$dir_script/squelettes/Tache.cpp"
+
+# Options
+file_base_model='${file_base}'
+file_name_model='${file_name}'
+include_guard_symbol_model='${include_guard_symbol}'
+file_base=$1
+file_name="$1.cpp"
+include_guard_symbol=$(printf "%s_H" $file_base | tr '[:lower:]' '[:upper:]')
+
+# On vérifie que le fichier en paramètre n'existe pas :
+if [ -e $file_name ]; then
+	echo "Erreur :Le fichier $file_name existe déjà"
+	exit 3
+fi
+
+# On crée le fichier avec le squelette :
+cat $squelette	| sed -e "s/$file_base_model/$file_base/g" \
+				| sed -e "s/$file_name_model/$file_name/g" \
+				| sed -e "s/$include_guard_symbol_model/$include_guard_symbol/g" \
+				> $file_name
+
+# Ouvrir VIM si option -v présente :
+if [ $vflag ]; then
+	vim $file_name
+fi
